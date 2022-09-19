@@ -2,7 +2,7 @@ const { tokenVerifier } = require("../helpers/jsonwebtoken");
 
 const auth = (req, res, next) => {
   console.log("middle auth cok");
-  const access_token = req.headers.access_token;
+  const access_token = req.headers.auth;
   if (access_token) {
     console.log("token ada");
     try {

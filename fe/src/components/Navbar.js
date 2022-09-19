@@ -1,7 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = (props) => {
+  const { loginStatus, loginCbHandler } = props;
+
+  const loginHandler = () => {
+    loginCbHandler(true);
+  };
+
+  const logoutHandler = () => {
+    localStorage.clear();
+    loginCbHandler(false);
+  };
+
   return (
     <>
       <nav className="navbar navbar-expand-lg nav-bg shadow-sm p-3 mb-5 bg-body rounded">
@@ -42,6 +53,30 @@ const Navbar = () => {
                 <Link className="nav-link" to="">
                   Publisher
                 </Link>
+              </li>
+              <li className="nav-item me-3">
+                <Link className="nav-link" to="/admins">
+                  Admin
+                </Link>
+              </li>
+              <li className="nav-item">
+                {loginStatus ? (
+                  <a
+                    className="nav-link"
+                    href="#"
+                    onClick={() => logoutHandler()}
+                  >
+                    Logout
+                  </a>
+                ) : (
+                  <a
+                    className="nav-link"
+                    href="#"
+                    onClick={() => loginHandler()}
+                  >
+                    Login
+                  </a>
+                )}
               </li>
             </ul>
           </div>

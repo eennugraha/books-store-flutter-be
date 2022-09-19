@@ -11,10 +11,12 @@ const AddAdmin = () => {
   });
 
   const navigation = useNavigate();
+  const params = useParams();
+  const { id } = params;
 
   const submitHandler = () => {
-    register(form);
-    // navigation("/admins");
+    register(form, localStorage.access_token);
+    navigation("/admins");
     console.log(form);
   };
 

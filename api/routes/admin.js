@@ -1,9 +1,15 @@
 const adminRoutes = require("express").Router();
 const AdminController = require("../controllers/AdminController");
 const upload = require("../helpers/multer");
+const { auth } = require("../middlewares/auth");
 
 adminRoutes.get("/", AdminController.getAllAdmins);
-adminRoutes.post("/register", upload.single("image"), AdminController.register);
+adminRoutes.post(
+  "/register",
+  auth,
+  upload.single("image"),
+  AdminController.register
+);
 adminRoutes.post("/login", AdminController.login);
 adminRoutes.put("/:id", upload.single("image"), AdminController.update);
 adminRoutes.delete("/:id", AdminController.delete);

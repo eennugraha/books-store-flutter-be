@@ -27,7 +27,7 @@ const detailAdmin = async (id, cb) => {
   }
 };
 
-const register = async (admin) => {
+const register = async (admin, access_token) => {
   try {
     let result = await axios({
       method: "POST",
@@ -35,9 +35,10 @@ const register = async (admin) => {
       data: admin,
       headers: {
         "content-type": "multipart/form-data",
+        auth: access_token,
       },
     });
-    // Swal.fire("Add author", "Author has been added", "success");
+    Swal.fire("Add author", "Author has been added", "success");
     console.log(admin);
   } catch (err) {
     console.log(err);

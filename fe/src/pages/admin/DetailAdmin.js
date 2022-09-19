@@ -34,7 +34,12 @@ const DetailAdmin = () => {
                   <td>{admin.name}</td>
                   <td>{admin.email}</td>
                   <td>
-                    <img src={displayImage} alt=""></img>
+                    <img
+                      src={displayImage}
+                      alt=""
+                      width={100}
+                      height={100}
+                    ></img>
                   </td>
                 </tr>
               </tbody>
