@@ -1,6 +1,6 @@
 import Admin from "./admin/Admin";
 import ListAdmins from "./admin/ListAdmins";
 import DetailAdmin from "./admin/DetailAdmin";
-import AddAdmin from "./admin/AddAdmin";
+import ActionAdmin from "./admin/ActionAdmin";
 
-export { Admin, ListAdmins, DetailAdmin, AddAdmin };
+export { Admin, ListAdmins, DetailAdmin, ActionAdmin };

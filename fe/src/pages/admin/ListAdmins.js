@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getAdmins } from "../../axios/adminAxios";
+import { getAdmins, deleteAdmin } from "../../axios/adminAxios";
 
 const ListAdmins = () => {
   const [admins, setAdmins] = useState([]);
@@ -8,6 +8,10 @@ const ListAdmins = () => {
   useEffect(() => {
     getAdmins((result) => setAdmins(result));
   }, []);
+
+  const deleteHandler = (id) => {
+    deleteAdmin(id);
+  };
 
   return (
     <>
@@ -45,6 +49,18 @@ const ListAdmins = () => {
                           >
                             Detail
                           </Link>
+                          <Link
+                            to={`/admins/${id}`}
+                            className="btn btn-sm btn-info"
+                          >
+                            Edit
+                          </Link>
+                          <button
+                            onClick={() => deleteHandler(+id)}
+                            className="btn btn-sm btn-danger"
+                          >
+                            Delete
+                          </button>
                         </td>
                       </tr>
                     );

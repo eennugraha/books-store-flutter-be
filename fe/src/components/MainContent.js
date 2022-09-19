@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Admin, DetailAdmin, ListAdmins, AddAdmin } from "../pages";
+import { Admin, DetailAdmin, ListAdmins, ActionAdmin } from "../pages";
 
 const MainContent = () => {
   return (
@@ -8,10 +8,10 @@ const MainContent = () => {
       <Routes>
         <Route activeClassName="active" path="admins" element={<Admin />}>
           <Route path="" element={<ListAdmins />}></Route>
-          <Route path="register" element={<AddAdmin />}></Route>
-          {/* <Route path="edit">
-            <Route path=":id" element={<EditPublisher />}></Route>
-          </Route> */}
+          <Route path="register" element={<ActionAdmin />}></Route>
+          <Route path="">
+            <Route path=":id" element={<ActionAdmin />}></Route>
+          </Route>
           <Route path="account">
             <Route path=":id" element={<DetailAdmin />}></Route>
           </Route>

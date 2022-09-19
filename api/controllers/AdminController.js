@@ -116,12 +116,8 @@ class AdminController {
           { where: { id }, individualHooks: true }
         );
         result[0] === 1
-          ? res.status(200).json({
-              message: `Admin with id ${id} has been updated!`,
-            })
-          : res.status(404).json({
-              message: `Admin with id ${id} does not exist!`,
-            });
+          ? res.status(200).json(`Admin with id ${id} has been updated!`)
+          : res.status(404).json(`Admin with id ${id} does not exist!`);
       } else {
         console.log("masuk ke else");
         const id = +req.params.id;
@@ -135,12 +131,8 @@ class AdminController {
           { where: { id }, individualHooks: true }
         );
         result[0] === 1
-          ? res.status(200).json({
-              message: `Admin with id ${id} has been updated!`,
-            })
-          : res.status(404).json({
-              message: `Admin with id ${id} does not exist!`,
-            });
+          ? res.status(200).json(`Admin with id ${id} has been updated!`)
+          : res.status(404).json(`Admin with id ${id} does not exist!`);
       }
     } catch (err) {
       res.status(500).json(err);
@@ -168,12 +160,8 @@ class AdminController {
         where: { id },
       });
       result === 1
-        ? res.status(200).json({
-            message: `Admin with id: ${id} has been deleted!`,
-          })
-        : res.status(404).json({
-            message: `Admin with id: ${id} does not exist!`,
-          });
+        ? res.status(200).json(`Admin with id: ${id} has been deleted!`)
+        : res.status(404).json(`Admin with id: ${id} does not exist!`);
     } catch (err) {
       res.status(500).json(err);
     }
