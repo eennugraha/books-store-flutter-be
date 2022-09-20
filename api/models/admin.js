@@ -48,7 +48,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         beforeUpdate: function (admin, options) {
           admin.password = encryptPass(admin.password);
-          // admin.image = admin.image || "https://via.placeholder.com/150";
         },
       },
       sequelize,

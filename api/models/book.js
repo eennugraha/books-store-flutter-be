@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
       book.belongsTo(models.author);
       book.belongsTo(models.publisher);
       book.belongsTo(models.category);
-      book.belongsToMany(models.transaction, { through: models.cart });
+      book.hasMany(models.cart);
+      book.belongsToMany(models.user, { through: models.wishlist });
     }
   }
   book.init(

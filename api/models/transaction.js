@@ -10,13 +10,16 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       transaction.belongsTo(models.user);
-      transaction.belongsToMany(models.book, { through: models.cart });
+      transaction.belongsTo(models.cart);
     }
   }
   transaction.init(
     {
       totalPayment: DataTypes.INTEGER,
+      transactionDate: DataTypes.DATE,
+      transactionCode: DataTypes.STRING,
       userId: DataTypes.INTEGER,
+      cartId: DataTypes.INTEGER,
     },
     {
       sequelize,

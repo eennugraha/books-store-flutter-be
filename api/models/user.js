@@ -1,6 +1,5 @@
-// tambahkan encrypt password
-
 "use strict";
+const { encryptPass } = require("../helpers/bcrypt");
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class user extends Model {
@@ -12,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       user.hasMany(models.transaction);
+      user.belongsToMany(models.book, { through: models.wishlist });
     }
   }
   user.init(
@@ -47,10 +47,14 @@ module.exports = (sequelize, DataTypes) => {
     {
       hooks: {
         beforeCreate: function (user, options) {
+          user.password = encryptPass(user.password);
           user.address = user.address || "Please update your address!";
           user.phoneNumber =
             user.phoneNumber || "Please update your phone number!";
           user.image = user.image || "https://via.placeholder.com/150";
+        },
+        beforeUpdate: function (user, options) {
+          user.password = encryptPass(user.password);
         },
       },
       sequelize,
