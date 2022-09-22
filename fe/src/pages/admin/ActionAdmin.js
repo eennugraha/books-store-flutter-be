@@ -16,7 +16,7 @@ const AddAdmin = () => {
 
   useEffect(() => {
     if (id) {
-      detailAdmin(+id, (result) => {
+      detailAdmin(+id, localStorage.access_token, (result) => {
         setForm({
           name: result.name,
           email: result.email,
@@ -45,7 +45,7 @@ const AddAdmin = () => {
           <p>{id ? "Edit Admin" : "Add Admin"}</p>
         </div>
         <div className="w-50 mx-auto">
-          {console.log(form.image)}
+          {/* {console.log(form.image)} */}
           <div className="mb-3">
             <label>Name: </label>
             <input

@@ -11,8 +11,8 @@ adminRoutes.post(
   AdminController.register
 );
 adminRoutes.post("/login", AdminController.login);
-adminRoutes.put("/:id", upload.single("image"), AdminController.update);
-adminRoutes.delete("/:id", AdminController.delete);
-adminRoutes.get("/account/:id", AdminController.getAdminInfo);
+adminRoutes.put("/:id", auth, upload.single("image"), AdminController.update);
+adminRoutes.delete("/:id", auth, AdminController.delete);
+adminRoutes.get("/account/:id", auth, AdminController.getAdminInfo);
 
 module.exports = adminRoutes;

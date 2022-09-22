@@ -15,11 +15,14 @@ const getAdmins = async (cb) => {
   }
 };
 
-const detailAdmin = async (id, cb) => {
+const detailAdmin = async (id, access_token, cb) => {
   try {
     let result = await axios({
       method: "GET",
       url: URL + "/account/" + id,
+      headers: {
+        auth: access_token,
+      },
     });
     cb(result.data);
   } catch (err) {
@@ -84,7 +87,7 @@ const edit = async (id, data, access_token) => {
   }
 };
 
-const deleteAdmin = async (id) => {
+const deleteAdmin = async (id, access_token) => {
   try {
     Swal.fire({
       title: "Are you sure?",
@@ -99,6 +102,9 @@ const deleteAdmin = async (id) => {
         let result = await axios({
           method: "DELETE",
           url: URL + "/" + id,
+          headers: {
+            auth: access_token,
+          },
         });
         console.log(result.data);
         if (result.data === `Admin with id: ${id} has been deleted!`) {

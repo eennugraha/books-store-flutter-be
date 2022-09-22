@@ -10,7 +10,7 @@ const ListAdmins = () => {
   }, []);
 
   const deleteHandler = (id) => {
-    deleteAdmin(id);
+    deleteAdmin(id, localStorage.access_token);
   };
 
   return (

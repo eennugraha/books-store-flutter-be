@@ -9,7 +9,7 @@ const DetailAdmin = () => {
 
   useEffect(() => {
     const { id } = params;
-    detailAdmin(+id, (result) => setAdmin(result));
+    detailAdmin(+id, localStorage.access_token, (result) => setAdmin(result));
   }, []);
 
   const displayImage = "http://localhost:3000/" + admin.image;
