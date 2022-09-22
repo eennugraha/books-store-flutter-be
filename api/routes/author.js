@@ -7,6 +7,6 @@ authorRoutes.get("/", AuthorController.getAllAuthors);
 authorRoutes.post("/add", auth, upload.single("image"), AuthorController.add);
 authorRoutes.put("/:id", auth, upload.single("image"), AuthorController.edit);
 authorRoutes.delete("/:id", auth, AuthorController.delete);
-authorRoutes.get("/author/:id", auth, AuthorController.getAuthorInfo);
+authorRoutes.get("/author/:id", AuthorController.getAuthorInfo);
 
 module.exports = authorRoutes;
