@@ -9,9 +9,11 @@ route.get("/", (req, res) => {
 const adminRoutes = require("./admin");
 const publisherRoutes = require("./publisher");
 const authorRoutes = require("./author");
+const categoryRoutes = require("./category");
 
 route.use("/api/admins", adminRoutes);
 route.use("/api/publishers", publisherRoutes);
 route.use("/api/authors", authorRoutes);
+route.use("/api/categories", categoryRoutes);
 
 module.exports = route;
