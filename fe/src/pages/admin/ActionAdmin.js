@@ -65,7 +65,9 @@ const AddAdmin = () => {
             ></input>
           </div>
           <div className="mb-3">
-            <label>{id ? "New/Old Password: " : "Password"}</label>
+            <label>
+              {id ? "Retype Your Password or Enter A New One: " : "Password"}
+            </label>
             <input
               onChange={(e) => setForm({ ...form, password: e.target.value })}
               type="password"

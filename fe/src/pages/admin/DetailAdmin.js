@@ -36,7 +36,7 @@ const DetailAdmin = () => {
                   <td>
                     <img
                       src={displayImage}
-                      alt=""
+                      alt="Please update your profile image"
                       width={100}
                       height={100}
                     ></img>

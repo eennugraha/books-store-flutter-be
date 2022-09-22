@@ -108,7 +108,11 @@ const deleteAdmin = async (id, access_token) => {
         });
         console.log(result.data);
         if (result.data === `Admin with id: ${id} has been deleted!`) {
-          Swal.fire("Deleted!", "Your file has been deleted.", "success");
+          Swal.fire(
+            "Deleted!",
+            "Your file has been deleted. Refresh the page to see changes.",
+            "success"
+          );
         } else {
           Swal.fire({
             icon: "error",
