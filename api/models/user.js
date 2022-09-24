@@ -53,9 +53,9 @@ module.exports = (sequelize, DataTypes) => {
             user.phoneNumber || "Please update your phone number!";
           user.image = user.image || "https://via.placeholder.com/150";
         },
-        beforeUpdate: function (user, options) {
-          user.password = encryptPass(user.password);
-        },
+        // beforeUpdate: function (user, options) {
+        //   user.password = encryptPass(user.password);
+        // },
       },
       sequelize,
       modelName: "user",

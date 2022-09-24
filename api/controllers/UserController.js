@@ -1,58 +1,54 @@
-const { admin } = require("../models");
-const { decryptPass, encryptPass } = require("../helpers/bcrypt");
-const { tokenGenerator, tokenVerifier } = require("../helpers/jsonwebtoken");
+const { user } = require("../models");
 const fs = require("fs");
-// const upload = require("../helpers/multer");
+const { encryptPass, decryptPass } = require("../helpers/bcrypt");
+const { tokenGenerator, tokenVerifier } = require("../helpers/jsonwebtoken");
 
-class AdminController {
-  static async getAllAdmins(req, res) {
+class UserController {
+  static async getAllUsers(req, res) {
     try {
-      let admins = await admin.findAll();
-      res.status(200).json(admins);
+      let users = await user.findAll();
+      res.status(200).json(users);
     } catch (err) {
       res.status(500).json(err);
     }
   }
 
   static async register(req, res) {
-    // tanpa upload image pas register
-    // try {
-    //   const { name, email, password, image } = req.body;
-    //   let result = await admin.create({
-    //     name,
-    //     email,
-    //     password,
-    //     image,
-    //   });
-    //   res.status(201).json(result);
-    // } catch (err) {
-    //   res.status(500).json(err.errors[0].message);
-    //   // console.log(err.errors[0].message);
-    // }
-
-    // ini kalo pake upload image pas register, tambahkan juga upload.single("image") di router nya
     try {
       if (req.file) {
-        const { name, email, password } = req.body;
+        const { name, email, password, address, phoneNumber } = req.body;
         const image = req.file.path;
-        let result = await admin.create({
+        let result = await user.create({
           name,
           email,
           password,
+          address,
+          phoneNumber,
           image,
         });
         res.status(201).json(result);
       } else {
-        const { name, email, password, image } = req.body;
-        let result = await admin.create({
+        const { name, email, password, address, phoneNumber, image } = req.body;
+        let result = await user.create({
           name,
           email,
           password,
+          address,
+          phoneNumber,
           image,
         });
         res.status(201).json(result);
       }
     } catch (err) {
+      // menghapus file gambar yg telah terupload
+      const imagePath = err.errors[0].instance.image;
+      fs.unlink(imagePath, (erro) => {
+        if (erro) {
+          console.error(erro);
+          return;
+        }
+      });
+
       res.status(500).json(err.errors[0].message);
     }
   }
@@ -60,7 +56,7 @@ class AdminController {
   static async login(req, res) {
     try {
       const { email, password } = req.body;
-      let emailFound = await admin.findOne({
+      let emailFound = await user.findOne({
         where: { email },
       });
       if (emailFound) {
@@ -86,15 +82,21 @@ class AdminController {
     }
   }
 
-  static async update(req, res) {
+  static async edit(req, res) {
     try {
       if (req.file) {
         const id = +req.params.id;
-        const { name, email, password } = req.body;
+        const { name, email, password, address, phoneNumber } = req.body;
         const image = req.file.path;
 
-        let selectedAccount = await admin.findByPk(id);
-        const imagePath = selectedAccount.image;
+        let selectedData = await user.findByPk(id);
+
+        // cek apakah data dengan id tersebut ada
+        if (selectedData === null) {
+          res.status(404).json(`User with id ${id} does not exist!`);
+        }
+
+        const imagePath = selectedData.image;
 
         fs.unlink(imagePath, (err) => {
           if (err) {
@@ -103,59 +105,68 @@ class AdminController {
           }
           //file removed
         });
+
         if (password === undefined) {
-          let result = await admin.update(
+          let result = await user.update(
             {
               name,
               email,
+              address,
+              phoneNumber,
               image,
             },
             { where: { id } }
           );
           result[0] === 1
-            ? res.status(200).json(`Admin with id ${id} has been updated!`)
-            : res.status(404).json(`Admin with id ${id} does not exist!`);
+            ? res.status(200).json(`User with id ${id} has been updated!`)
+            : res.status(404).json(`User with id ${id} does not exist!`);
         } else {
-          let result = await admin.update(
+          let result = await user.update(
             {
               name,
               email,
               password: encryptPass(password),
+              address,
+              phoneNumber,
               image,
             },
             { where: { id } }
           );
           result[0] === 1
-            ? res.status(200).json(`Admin with id ${id} has been updated!`)
-            : res.status(404).json(`Admin with id ${id} does not exist!`);
+            ? res.status(200).json(`User with id ${id} has been updated!`)
+            : res.status(404).json(`User with id ${id} does not exist!`);
         }
       } else {
         const id = +req.params.id;
-        const { name, email, password } = req.body;
+        const { name, email, password, address, phoneNumber } = req.body;
 
         if (password === undefined) {
-          let result = await admin.update(
+          let result = await user.update(
             {
               name,
               email,
+              address,
+              phoneNumber,
             },
             { where: { id } }
           );
           result[0] === 1
-            ? res.status(200).json(`Admin with id ${id} has been updated!`)
-            : res.status(404).json(`Admin with id ${id} does not exist!`);
+            ? res.status(200).json(`User with id ${id} has been updated!`)
+            : res.status(404).json(`User with id ${id} does not exist!`);
         } else {
-          let result = await admin.update(
+          let result = await user.update(
             {
               name,
               email,
               password: encryptPass(password),
+              address,
+              phoneNumber,
             },
             { where: { id } }
           );
           result[0] === 1
-            ? res.status(200).json(`Admin with id ${id} has been updated!`)
-            : res.status(404).json(`Admin with id ${id} does not exist!`);
+            ? res.status(200).json(`User with id ${id} has been updated!`)
+            : res.status(404).json(`User with id ${id} does not exist!`);
         }
       }
     } catch (err) {
@@ -168,7 +179,7 @@ class AdminController {
       const id = +req.params.id;
 
       // menghapus file image bersangkutan
-      let selectedAccount = await admin.findByPk(id);
+      let selectedAccount = await user.findByPk(id);
 
       if (selectedAccount !== null) {
         const imagePath = selectedAccount.image;
@@ -181,27 +192,28 @@ class AdminController {
         });
       }
 
-      // menghapus row di database
-      let result = await admin.destroy({
+      let result = await user.destroy({
         where: { id },
       });
       result === 1
-        ? res.status(200).json(`Admin with id: ${id} has been deleted!`)
-        : res.status(404).json(`Admin with id: ${id} does not exist!`);
+        ? res.status(200).json(`User with id: ${id} has been deleted!`)
+        : res.status(404).json(`User with id: ${id} does not exist!`);
     } catch (err) {
       res.status(500).json(err);
     }
   }
 
-  static async getAdminInfo(req, res) {
+  static async getUserInfo(req, res) {
     try {
       const id = +req.params.id;
-      let result = await admin.findByPk(id);
-      res.status(200).json(result);
+      let result = await user.findByPk(id);
+      result !== null
+        ? res.status(200).json(result)
+        : res.status(404).json(`User with id: ${id} does not exist!`);
     } catch (err) {
-      res.status(404).json(err);
+      res.status(500).json(err);
     }
   }
 }
 
-module.exports = AdminController;
+module.exports = UserController;
