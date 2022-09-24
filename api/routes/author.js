@@ -1,12 +1,12 @@
-const authorRoutes = require("express").Router();
+const authorRoute = require("express").Router();
 const AuthorController = require("../controllers/AuthorController");
 const upload = require("../helpers/multer");
 const { auth } = require("../middlewares/auth");
 
-authorRoutes.get("/", AuthorController.getAllAuthors);
-authorRoutes.post("/add", auth, upload.single("image"), AuthorController.add);
-authorRoutes.put("/:id", auth, upload.single("image"), AuthorController.edit);
-authorRoutes.delete("/:id", auth, AuthorController.delete);
-authorRoutes.get("/author/:id", AuthorController.getAuthorInfo);
+authorRoute.get("/", AuthorController.getAllAuthors);
+authorRoute.post("/add", auth, upload.single("image"), AuthorController.add);
+authorRoute.put("/:id", auth, upload.single("image"), AuthorController.edit);
+authorRoute.delete("/:id", auth, AuthorController.delete);
+authorRoute.get("/author/:id", AuthorController.getAuthorInfo);
 
-module.exports = authorRoutes;
+module.exports = authorRoute;

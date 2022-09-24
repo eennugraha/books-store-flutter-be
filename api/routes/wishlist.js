@@ -1,9 +1,9 @@
-const wishlistRoutes = require("express").Router();
+const wishlistRoute = require("express").Router();
 const WishlistController = require("../controllers/WishListController");
 const { auth } = require("../middlewares/auth");
 
-wishlistRoutes.get("/", auth, WishlistController.getMyWishlist);
-wishlistRoutes.post("/add", auth, WishlistController.add);
-wishlistRoutes.delete("/:id", auth, WishlistController.delete);
+wishlistRoute.get("/", auth, WishlistController.getMyWishlist);
+wishlistRoute.post("/add", auth, WishlistController.add);
+wishlistRoute.delete("/:id", auth, WishlistController.delete);
 
-module.exports = wishlistRoutes;
+module.exports = wishlistRoute;
