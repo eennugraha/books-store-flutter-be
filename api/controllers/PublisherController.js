@@ -1,4 +1,4 @@
-const { publisher } = require("../models");
+const { publisher, book, author, category } = require("../models");
 
 class PublisherController {
   static async getAllPublishers(req, res) {
@@ -51,10 +51,13 @@ class PublisherController {
   static async getPublisherInfo(req, res) {
     try {
       const id = +req.params.id;
-      let result = await publisher.findByPk(id);
-      result !== null
+      let result = await book.findAll({
+        where: { publisherId: id },
+        include: [author, publisher, category],
+      });
+      result.length !== 0
         ? res.status(200).json(result)
-        : res.status(404).json(`Author with id: ${id} does not exist!`);
+        : res.status(404).json(`Book by this publisher is currently empty!`);
     } catch (err) {
       res.status(500).json(err);
     }

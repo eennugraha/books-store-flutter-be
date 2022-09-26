@@ -1,4 +1,4 @@
-const { category } = require("../models");
+const { category, book, author, publisher } = require("../models");
 
 class CategoryController {
   static async getAllCategories(req, res) {
@@ -55,10 +55,13 @@ class CategoryController {
   static async getCategoryInfo(req, res) {
     try {
       const id = +req.params.id;
-      let result = await category.findByPk(id);
-      result !== null
+      let result = await book.findAll({
+        where: { categoryId: id },
+        include: [author, publisher, category],
+      });
+      result.length !== 0
         ? res.status(200).json(result)
-        : res.status(404).json(`Category with id: ${id} does not exist!`);
+        : res.status(404).json(`Book in this category is currently empty!`);
     } catch (err) {
       res.status(500).json(err);
     }

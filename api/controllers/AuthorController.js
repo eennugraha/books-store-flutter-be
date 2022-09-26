@@ -1,4 +1,4 @@
-const { author } = require("../models");
+const { author, book, publisher, category } = require("../models");
 const fs = require("fs");
 
 class AuthorController {
@@ -116,6 +116,21 @@ class AuthorController {
       result !== null
         ? res.status(200).json(result)
         : res.status(404).json(`Author with id: ${id} does not exist!`);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+
+  static async getAuthorBooks(req, res) {
+    try {
+      const id = +req.params.id;
+      let result = await book.findAll({
+        where: { authorId: id },
+        include: [publisher, category, author],
+      });
+      result.length !== 0
+        ? res.status(200).json(result)
+        : res.status(404).json(`Book by this author is currently empty!`);
     } catch (err) {
       res.status(500).json(err);
     }
