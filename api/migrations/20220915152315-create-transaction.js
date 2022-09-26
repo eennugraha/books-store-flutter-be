@@ -11,14 +11,12 @@ module.exports = {
       totalPayment: {
         type: Sequelize.INTEGER,
       },
-      transactionDate: {
+      sentDate: {
         type: Sequelize.DATE,
       },
       transactionCode: {
         type: Sequelize.STRING,
-      },
-      userId: {
-        type: Sequelize.INTEGER,
+        unique: true,
       },
       cartId: {
         type: Sequelize.INTEGER,

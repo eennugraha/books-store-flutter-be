@@ -8,10 +8,22 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      paidDate: {
+        type: Sequelize.DATE,
+      },
       quantity: {
         type: Sequelize.INTEGER,
       },
+      isPaid: {
+        type: Sequelize.INTEGER,
+      },
+      isSent: {
+        type: Sequelize.INTEGER,
+      },
       bookId: {
+        type: Sequelize.INTEGER,
+      },
+      userId: {
         type: Sequelize.INTEGER,
       },
       createdAt: {

@@ -11,12 +11,17 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       cart.hasOne(models.transaction);
       cart.belongsTo(models.book);
+      cart.belongsTo(models.user);
     }
   }
   cart.init(
     {
+      paidDate: DataTypes.DATE,
       quantity: DataTypes.INTEGER,
+      isPaid: DataTypes.INTEGER,
+      isSent: DataTypes.INTEGER,
       bookId: DataTypes.INTEGER,
+      userId: DataTypes.INTEGER,
     },
     {
       sequelize,
