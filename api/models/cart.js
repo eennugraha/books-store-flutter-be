@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      cart.belongsTo(models.transaction);
+      cart.hasOne(models.transaction);
       cart.belongsTo(models.book);
     }
   }
@@ -17,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       quantity: DataTypes.INTEGER,
       bookId: DataTypes.INTEGER,
-      transactionId: DataTypes.INTEGER,
     },
     {
       sequelize,
