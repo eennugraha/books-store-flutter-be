@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "admin",
-    "database": "books-store-flutter",
+    "database": "books-store-flutter-test",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
