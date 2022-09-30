@@ -32,12 +32,13 @@ class CartController {
     try {
       const id = +req.params.id;
       const userId = +req.userData.id;
+
       let result = await cart.destroy({
-        where: { id } && { userId },
+        where: { id, userId: userId },
       });
       result === 1
         ? res.status(200).json(`Cart with id: ${id} has been deleted!`)
-        : res.status(404).json(`Cart with id: ${id} does not exist!`);
+        : res.status(404).json(`You don't have cart with id: ${id}`);
     } catch (err) {
       res.status(500).json(err);
     }
