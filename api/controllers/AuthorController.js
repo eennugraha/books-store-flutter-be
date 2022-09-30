@@ -98,6 +98,24 @@ class AuthorController {
   static async delete(req, res) {
     try {
       const id = +req.params.id;
+
+      let selectedData = await author.findByPk(id);
+
+      // cek apakah data dengan id tersebut ada
+      if (selectedData === null) {
+        res.status(404).json(`Author with id ${id} does not exist!`);
+      }
+
+      const imagePath = selectedData.image;
+
+      fs.unlink(imagePath, (err) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        //file removed
+      });
+
       let result = await author.destroy({
         where: { id },
       });

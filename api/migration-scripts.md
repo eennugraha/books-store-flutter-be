@@ -14,7 +14,7 @@ npx sequelize-cli model:generate --name category --attributes name:string
 
 npx sequelize-cli model:generate --name book --attributes title:string,synopsis:text,publicationYear:date,stock:integer,price:integer,image:string,authorId:integer,categoryId:integer,publisherId:integer
 
-npx sequelize-cli model:generate --name transaction --attributes totalPayment:integer,userId:integer
+npx sequelize-cli model:generate --name transaction --attributes totalPayment:integer,sentDate:date,transactionCode:string,cartId:integer
 
 npx sequelize-cli model:generate --name cart --attributes quantity:integer,bookId:integer,transactionId:integer
 

@@ -31,9 +31,8 @@ class WishlistController {
   static async delete(req, res) {
     try {
       const id = +req.params.id;
-      const userId = +req.userData.id;
       let result = await wishlist.destroy({
-        where: { id } && { userId },
+        where: { id },
       });
       result === 1
         ? res.status(200).json(`Wishlist with id: ${id} has been deleted!`)

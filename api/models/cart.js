@@ -24,6 +24,13 @@ module.exports = (sequelize, DataTypes) => {
       userId: DataTypes.INTEGER,
     },
     {
+      hooks: {
+        beforeCreate: function (cart, options) {
+          cart.quantity = cart.quantity || 1;
+          cart.isPaid = cart.isPaid || 0;
+          cart.isSent = cart.isSent || 0;
+        },
+      },
       sequelize,
       modelName: "cart",
     }

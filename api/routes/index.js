@@ -14,6 +14,7 @@ const bookRoutes = require("./book");
 const userRoutes = require("./user");
 const wishlistRoutes = require("./wishlist");
 const cartRoutes = require("./cart");
+const transactionRoutes = require("./transaction");
 
 route.use("/api/admins", adminRoutes);
 route.use("/api/publishers", publisherRoutes);
@@ -23,5 +24,6 @@ route.use("/api/books", bookRoutes);
 route.use("/api/users", userRoutes);
 route.use("/api/wishlists", wishlistRoutes);
 route.use("/api/carts", cartRoutes);
+route.use("/api/transactions", transactionRoutes);
 
 module.exports = route;

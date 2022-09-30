@@ -5,7 +5,7 @@ class CartController {
     try {
       const userId = +req.userData.id;
       let carts = await cart.findAll({
-        where: { userId: userId },
+        where: { userId: userId, isPaid: 0 },
         include: [user, book],
       });
       res.status(200).json(carts);

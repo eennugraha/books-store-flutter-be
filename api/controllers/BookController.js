@@ -155,6 +155,23 @@ class BookController {
   static async delete(req, res) {
     try {
       const id = +req.params.id;
+
+      let selectedData = await book.findByPk(id);
+
+      if (selectedData === null) {
+        res.status(404).json(`Book with id ${id} does not exist!`);
+      }
+
+      const imagePath = selectedData.image;
+
+      fs.unlink(imagePath, (err) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        //file removed
+      });
+
       let result = await book.destroy({
         where: { id },
       });
