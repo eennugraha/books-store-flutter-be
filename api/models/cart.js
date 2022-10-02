@@ -16,10 +16,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   cart.init(
     {
-      paidDate: DataTypes.DATE,
+      orderDate: DataTypes.DATE,
       quantity: DataTypes.INTEGER,
-      isPaid: DataTypes.INTEGER,
-      isSent: DataTypes.INTEGER,
+      bookStatus: DataTypes.INTEGER,
+      deliveryStatus: DataTypes.INTEGER,
       bookId: DataTypes.INTEGER,
       userId: DataTypes.INTEGER,
     },
@@ -27,8 +27,8 @@ module.exports = (sequelize, DataTypes) => {
       hooks: {
         beforeCreate: function (cart, options) {
           cart.quantity = cart.quantity || 1;
-          cart.isPaid = cart.isPaid || 0;
-          cart.isSent = cart.isSent || 0;
+          cart.bookStatus = cart.bookStatus || 0;
+          cart.deliveryStatus = cart.deliveryStatus || 0;
         },
       },
       sequelize,
